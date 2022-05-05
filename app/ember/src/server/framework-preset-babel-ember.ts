@@ -1,6 +1,8 @@
 import type { TransformOptions } from '@babel/core';
 import { precompile } from 'ember-source/dist/ember-template-compiler';
+
 import { findDistEsm } from '@storybook/core-common';
+
 import type { StorybookConfig, Options } from '@storybook/core-common';
 
 let emberOptions: any;
@@ -29,17 +31,21 @@ export function babel(config: TransformOptions, options: Options): TransformOpti
 
   const extraPlugins = [
     [
-      require.resolve('babel-plugin-htmlbars-inline-precompile'),
+      require.resolve('babel-plugin-ember-template-compilation'),
       {
         precompile: precompileWithPlugins,
-        modules: {
-          'ember-cli-htmlbars': 'hbs',
-          'ember-cli-htmlbars-inline-precompile': 'default',
-          'htmlbars-inline-precompile': 'default',
+        outputModuleOverrides: {
+          '@ember/template-factory': {
+            createTemplateFactory: ['createTemplateFactory', '@glimmer/core'],
+          },
         },
+        enableLegacyModules: [
+          'ember-cli-htmlbars',
+          'ember-cli-htmlbars-inline-precompile',
+          'htmlbars-inline-precompile',
+        ],
       },
     ],
-    [require.resolve('babel-plugin-ember-modules-api-polyfill')],
   ];
 
   return {

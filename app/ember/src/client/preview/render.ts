@@ -1,7 +1,13 @@
+// @ts-nocheck
+import Component from '@glimmer/component';
+import { setComponentTemplate } from '@glimmer/core';
+
 import global from 'global';
 import dedent from 'ts-dedent';
+
 import { RenderContext } from '@storybook/store';
-import { OptionsArgs, EmberFramework } from './types';
+
+import { EmberFramework, OptionsArgs } from './types';
 
 const { window: globalWindow, document } = global;
 
@@ -36,15 +42,9 @@ function render(options: OptionsArgs, el: HTMLElement) {
       return appInstancePrivate.boot().then(() => appInstancePrivate);
     })
     .then((instance: any) => {
-      instance.register(
-        'component:story-mode',
-        Ember.Component.extend({
-          layout: template || options,
-          ...context,
-        })
-      );
-
-      const component = instance.lookup('component:story-mode');
+      const glimmerComponentManager = instance.lookup('component-manager:glimmer');
+      const component = glimmerComponentManager.createComponent(Component, context);
+      setComponentTemplate(template, component);
 
       if (element) {
         component.appendTo(element);

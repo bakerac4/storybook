@@ -41,12 +41,20 @@
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
+  "resolutions": {
+    "@glimmer/validator": "0.84.0"
+  },
   "dependencies": {
+    "@glimmer/application": "^1.1.2",
+    "@glimmer/bundle-compiler": "^0.56.2",
+    "@glimmer/component": "^1.1.2",
+    "@glimmer/core": "^2.0.0-beta.1",
     "@storybook/core": "6.5.0-alpha.64",
     "@storybook/core-common": "6.5.0-alpha.64",
     "@storybook/docs-tools": "6.5.0-alpha.64",
     "@storybook/store": "6.5.0-alpha.64",
     "core-js": "^3.8.2",
+    "ember-source": "^4.0.0",
     "global": "^4.4.0",
     "react": "16.14.0",
     "react-dom": "16.14.0",
@@ -56,9 +64,8 @@
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "babel-plugin-ember-modules-api-polyfill": "^2.12.0",
-    "babel-plugin-htmlbars-inline-precompile": "2 || 3",
-    "ember-source": "^3.16.0"
+    "babel-plugin-ember-template-compilation": "^1.0.2",
+    "ember-source": "^4.3.0"
   },
   "engines": {
     "node": ">=10.13.0"
